@@ -29,6 +29,13 @@ def filter_words(words, skip_words):
     """
     pass
 
+    for sub_list in words:
+        for value in sub_list:
+            for word in words:
+                if word in skip_words:
+                    words.remove(word)
+
+    return(words)
     
                 
 
@@ -85,3 +92,32 @@ def normalise_input(user_input):
     #
     # COMPLETE ME!
     #
+
+    counter = 0
+    new_word = ""
+    temp_list = []
+    normalised_list = []
+
+    for char in no_punct:
+        temp_list.append(char)
+
+    while counter < len(temp_list):
+        if temp_list[counter] != ' ':
+            new_word = new_word + temp_list[counter]
+
+        else:
+            if temp_list[counter - 1] != ' ':
+                normalised_list.append(new_word)
+
+            new_word = ""
+
+        counter = counter + 1
+
+    normalised_list.append(new_word)
+    words = normalised_list
+
+    if '' in words:
+        words.remove('')
+
+    filter_words(words, skip_words)
+    print(words)

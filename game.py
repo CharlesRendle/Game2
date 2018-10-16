@@ -26,6 +26,13 @@ def list_of_items(items):
     """
     pass
 
+    item_list = []
+
+    for objects in range(0, len(items)):
+        item_list.append(items[objects]["name"])
+
+    return(', '.join(item_list))
+
 
 def print_room_items(room):
     """This function takes a room as an input and nicely displays a list of items
@@ -51,6 +58,11 @@ def print_room_items(room):
     """
     pass
 
+    items = room["items"]
+    if items != []:
+        print("There is " + list_of_items(items) + " here.")
+        print()
+
 
 def print_inventory_items(items):
     """This function takes a list of inventory items and displays it nicely, in a
@@ -64,6 +76,12 @@ def print_inventory_items(items):
     """
     pass
 
+    if items != []:
+        print("You have " + list_of_items(items) + ".")
+        print()
+
+    else:
+        print("Your inventory is empty!")
 
 def print_room(room):
     """This function takes a room as an input and nicely displays its name
@@ -122,6 +140,7 @@ def print_room(room):
     #
     # COMPLETE ME!
     #
+    print_room_items(room)
 
 def exit_leads_to(exits, direction):
     """This function takes a dictionary of exits and a direction (a particular
@@ -193,6 +212,11 @@ def print_menu(exits, room_items, inv_items):
     #
     # COMPLETE ME!
     #
+    for items in room_items:
+        print("TAKE " + items["id"].upper() + " to take " + items["name"] + ".")
+
+    for items in inv_items:
+        print("DROP " + items["id"].upper() + " to drop your " + items["name"] + ".")
     
     print("What do you want to do?")
 
