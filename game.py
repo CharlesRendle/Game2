@@ -239,7 +239,15 @@ def is_valid_exit(exits, chosen_exit):
     """
     return chosen_exit in exits
 
+def is_valid_mass(inv_items):
+    weight = 0
+    
+    for masses in inventory:
+        weight = weight + masses["mass"]
 
+    return(weight)
+        
+    
 def execute_go(direction):
     """This function, given the direction (e.g. "south") updates the current room
     to reflect the movement of the player if the direction is a valid exit
@@ -247,6 +255,15 @@ def execute_go(direction):
     moving). Otherwise, it prints "You cannot go there."
     """
     pass
+
+    global current_room
+
+    if is_valid_exit(current_room["exits"], direction) == True:
+        current_room = move(current_room["exits"], direction)
+        return(current_room)
+
+    else:
+        print("You cannot go there.")
 
 
 def execute_take(item_id):
@@ -257,6 +274,16 @@ def execute_take(item_id):
     """
     pass
     
+    for names in current_room["items"]:
+        if names["id"] == item_id:            
+            if is_valid_mass(inventory) <= 2.0:
+                inventory.append(names)
+                current_room["items"].remove(names)
+                return
+
+    print("You cannot take that.")
+
+    
 
 def execute_drop(item_id):
     """This function takes an item_id as an argument and moves this item from the
@@ -264,6 +291,14 @@ def execute_drop(item_id):
     no such item in the inventory, this function prints "You cannot drop that."
     """
     pass
+
+    for names in inventory:
+        if names["id"] == item_id:
+            inventory.remove(names)
+            current_room["items"].append(names)
+            return
+
+    print("You cannot drop that.")
     
 
 def execute_command(command):
@@ -342,15 +377,22 @@ def main():
 
     # Main game loop
     while True:
-        # Display game status (room description, inventory etc.)
-        print_room(current_room)
-        print_inventory_items(inventory)
+        if is_valid_mass(inventory) == 1.5:
+            print("Congratulations..... You have won the game!")
+            break
 
-        # Show the menu with possible actions and ask the player
-        command = menu(current_room["exits"], current_room["items"], inventory)
+        else:
+            # Display game status (room description, inventory etc.)
+            print_room(current_room)
+            print_inventory_items(inventory)
 
-        # Execute the player's command
-        execute_command(command)
+            # Show the menu with possible actions and ask the player
+            command = menu(current_room["exits"], current_room["items"], inventory)
+
+            # Execute the player's command
+            execute_command(command)
+
+
 
 
 

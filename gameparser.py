@@ -120,4 +120,8 @@ def normalise_input(user_input):
         words.remove('')
 
     filter_words(words, skip_words)
+    command = []
+    command = words
+    
     print(words)
+    return(command)
