@@ -123,5 +123,5 @@ def normalise_input(user_input):
     command = []
     command = words
     
-    print(words)
+    #print(words)
     return(command)
